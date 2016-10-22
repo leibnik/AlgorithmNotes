@@ -85,6 +85,48 @@ QUEUE-FULL(Q)
         return false
     
 ```
+##链表
+各个对象按照线性顺序进行排列的一种数据结构。数组的线性顺序由数组下标决定，而与之不同的是，链表的顺序
+是由各个对象里的指针决定的。
+
+* 单向链表：每个对象包含一个关键字 key 和一个指针 next
+* 双向链表：每个对象包含一个关键字 key 和两个指针 prev 和 next ， next 指向下一个对象， prev 指向上一个对象，
+同时表头 prev 为 null ，表尾 next 为 null
+* 双向循环链表：在双向链表的基础上，使表头的 prev 指向表尾元素，表尾的 next 指向表头元素
+* 有哨兵的双向循环链表：在双向链表的基础上，设置一个哨兵对象 L.nil ，使该对象介于表头和表尾之间，即 L.nil.next
+指向表头， L.nil.prev 指向表尾，同时使表尾的 next 和表头的 prev 都指向 L.nil
+
+###伪代码
+以双向链表为例
+```
+// 搜索
+LIST-SEARCH(L,k)
+    x = L.head
+    while x ≠ NIL and x.key ≠ k
+        x = x.next
+    return x
+
+// 插入
+LIST-INSERT(L, x)
+    x.next = L.head
+    if L.head ≠ NIL
+        L.head.prev = x
+    L.head = x
+    x.prev = NIL
+    
+
+// 删除
+LIST-DELETE(L, x)
+    if x.prev ≠ NIL
+        x.prev.next = x.next
+    else
+        L.head = x.next
+    
+    if x.next ≠ NIL
+        x.next.prev = x.prev
+        
+```
+
 
 #排序算法
 ##冒泡排序
