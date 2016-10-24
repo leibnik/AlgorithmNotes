@@ -28,7 +28,6 @@
 #数据结构
 ##栈
 后进先出(last-in, first-out,LIFO)
-###伪代码
 ```
 // 判断栈是否为空
 STACK-EMPTY(S)
@@ -49,7 +48,6 @@ POP(S)
 ```
 ##队列
 先进先出(first-in, first-out,FIFO)
-###伪代码
 ```
 //入列
 ENQUEUE(Q, x)
@@ -96,7 +94,6 @@ QUEUE-FULL(Q)
 * 有哨兵的双向循环链表：在双向链表的基础上，设置一个哨兵对象 L.nil ，使该对象介于表头和表尾之间，即 L.nil.next
 指向表头， L.nil.prev 指向表尾，同时使表尾的 next 和表头的 prev 都指向 L.nil
 
-###伪代码
 以双向链表为例
 ```
 // 搜索
@@ -127,13 +124,162 @@ LIST-DELETE(L, x)
         
 ```
 
+##二叉树
+由结点组成的数据结构，结点包含的链接可以为 null ，或指向其他结点。在二叉树中，除了根节点无父结点外
+，其他的每个结点只能有一个父结点，同时每个结点都只有左右两个链接，分别指向自己的左子节点和右子节点。
+
+##二叉搜索树
+在二叉树定义的基础上，规定任何结点 x ，其左子树中的关键字最大不超过 x.key ，其右子树中的关键字最小不低于 x.key 。
+* 中序遍历(inorder tree walk): 输出的子树根的关键字位于左子树的关键字值和右子树的关键字值之间。
+    ```
+    INORDER-TREE-WALK(x)
+        if x ≠ null
+            INORDER-TREE-WALK(x,left)
+            print x.key
+            INORDER-TREE-WALK(x,right)
+    ```
+* 先序遍历(preorder tree walk): 输出的子树根的关键字在其左右子树的关键字值之前。
+    ```
+    PREORDER-TREE-WALK(x)
+        if x ≠ null
+            print x.key
+            PREORDER-TREE-WALK(x,left)
+            PREORDER-TREE-WALK(x,right)
+    ```
+* 后序遍历(postorder tree walk): 输出的子树根的关键字在其左右子树的关键字值之后。
+    ```
+    POSTORDER-TREE-WALK(x)
+        if x ≠ null
+            POSTORDER-TREE-WALK(x,left)
+            POSTORDER-TREE-WALK(x,right)
+            print x.key
+    ```
+
+###查找
+递归查找
+
+```
+TREE-SEARCH(x,k)
+    if x == NIL or k == x.key
+        return x
+    if k < x.key
+        return TREE-SEARCH(x.left, k)
+    else
+        return TREE-SEARCH(x.right, k)
+```
+
+迭代查找
+```
+ITERATIVE-TREE-SEARCH(x, k)
+    while x ≠ NIL and k ≠ x.key
+        if k < x.key
+            x = x.left
+        else
+            x = x.right
+    return x
+```
+最小关键字元素
+```
+TREE-MINIMUM(x)
+    while x.left ≠ NIL
+        x = x.left
+    return x
+```
+
+最大关键字元素
+```
+TREE-MAXIMUM(x)
+    while x.right ≠ NIL
+        x = x.right
+    return x
+```
+后继
+```
+TREE-SUCCESSOR(x)
+    if x.right ≠ NIL
+        return TREE-MINIMUM(x, right)
+    y = x.p
+    while y ≠ NIL and x == y.right
+        x = y
+        y = y.p
+    return y
+```
+
+前驱
+```
+TREE-PRESUCCESSOR(x)
+    if x.left ≠ NIL
+        return TREE-MAXIMUM(x, left)
+    y = x.p
+    while y ≠ NIL and x = y.left
+        x = y
+        y = y.p
+    return y
+```
+**在一棵高度为 h 的二叉搜索树上，动态集合上的操作 SEARCH 、 MINIMUM 、 MAXIMUM 、 SUCCESSOR 和 PREDECESSOR 可以在 
+O(h) 时间内完成。**
+
+###插入
+```
+TREE-INSERT(T, z)
+    y = NIL
+    x = T.root
+    while x ≠ NIL
+        y = x
+        if z.key < x.key
+            x = x.left
+        else
+            x = x.right
+    z.p = y
+    if y == NIL
+        T.root = z
+    elseif z.key < y.key
+        y.left = z
+    else
+        y.right = z
+        
+```  
+###删除
+从一棵二叉搜索树 T 中删除结点 z 的整个策略分为三种基本情况：
+* 如果 z 没有子节点， 那么只是简单的将它删除，并修改它的父结点，用NIL作为孩子来替换 z。
+* 如果 z 只有一个子节点，那么将这个孩子提升到树中 z 的位置上，并修改它的父结点，用原来 z 的孩子作为孩子来替换 z 本来的地位。
+* 如果 z 有两个子节点，那么找到 z 的后继 y (一定在 z 的右子树中)，并让 y 占据树中 z 的位置。 z 的原来右子树部分成为 y 的新
+的右子树，并且 z 的左子树成为 y 的新的左子树。
+
+```
+// 二叉搜索树内移动子树
+TRANSPLANT(T, m, n)
+    if m.p == NIL
+        T.root = n
+    elseif m == m.p.left
+        m.p.left = n
+    else 
+        m.p.right = n
+    if n ≠ NIL
+        n.p = m.p
+
+TREE-DELETE(T, z)
+    if z.left == NIL
+        TRANSPLANT(T, z, z.right)
+    elseif z.right == NIL
+        TRANSPLANT(T, z, z.left)
+    else y = TREE-MINIMUM(z.right)
+        if y.p ≠ z
+            TRANSPLANT(T, y, y.right)
+            y.right = z.right
+            y.right.p = y
+        TRANSPLANT(T, z, y)
+        y.left = z.left
+        y.left.p = y
+```
+
+**在一棵高度为 h 的二叉搜索树上，动态集合上的操作 INSERT 和 DELETE 的运行时间均为O(H)。**
 
 #排序算法
 ##冒泡排序
 假设要求的数组是正序，两两进行比较，如果前一个数比后一个数小，位置不变。
 如果前一个数比后一个数大，位置互换，再跟后一个数进行比较，直到最后。第一轮比较产出一个
 最大数，同时将第二轮比较的范围缩小1位，以此类推，每一轮参与比较的数据组都会产出一个“最大数”，如同冒泡一般。
-###伪代码
 ```
 BUBBLESORT(A){
    for i = 1 to length[A]{
@@ -172,7 +318,6 @@ BUBBLESORT(A){
 扑克的排序是这个算法的形象比喻：桌面上一叠未排序的扑克牌，左手拿的牌代表已排序的扑克，右手拿的表示待排序的
 扑克牌，刚开始时左手牌为空（相当于已排序），抽一张牌给左手（依旧相当于已排序），从抽第二张牌开始，右手的牌
 要插入左手的牌就需要与左手已经排好序的牌进行比较并插入到正确的位置。
-###伪代码
 ```
 INSERTION-SORT(A){
     for i = 2 to A.length {
@@ -191,8 +336,6 @@ INSERTION-SORT(A){
 最坏：O(n^2)
 
 ##归并排序
-
-###伪代码
 
 ```
 MERGE-SORT(A,p,r)
