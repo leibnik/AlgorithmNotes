@@ -131,29 +131,34 @@ LIST-DELETE(L, x)
 ##二叉搜索树
 在二叉树定义的基础上，规定任何结点 x ，其左子树中的关键字最大不超过 x.key ，其右子树中的关键字最小不低于 x.key 。
 * 中序遍历(inorder tree walk): 输出的子树根的关键字位于左子树的关键字值和右子树的关键字值之间。
-    ```
-    INORDER-TREE-WALK(x)
-        if x ≠ null
-            INORDER-TREE-WALK(x,left)
-            print x.key
-            INORDER-TREE-WALK(x,right)
-    ```
+
+```
+INORDER-TREE-WALK(x)
+    if x ≠ null
+        INORDER-TREE-WALK(x.left)
+        print x.key
+        INORDER-TREE-WALK(x.right)
+```
+
 * 先序遍历(preorder tree walk): 输出的子树根的关键字在其左右子树的关键字值之前。
-    ```
-    PREORDER-TREE-WALK(x)
-        if x ≠ null
-            print x.key
-            PREORDER-TREE-WALK(x,left)
-            PREORDER-TREE-WALK(x,right)
-    ```
+
+```
+PREORDER-TREE-WALK(x)
+    if x ≠ null
+        print x.key
+        PREORDER-TREE-WALK(x.left)
+        PREORDER-TREE-WALK(x.right)
+```
+
 * 后序遍历(postorder tree walk): 输出的子树根的关键字在其左右子树的关键字值之后。
-    ```
-    POSTORDER-TREE-WALK(x)
-        if x ≠ null
-            POSTORDER-TREE-WALK(x,left)
-            POSTORDER-TREE-WALK(x,right)
-            print x.key
-    ```
+
+```
+POSTORDER-TREE-WALK(x)
+    if x ≠ null
+        POSTORDER-TREE-WALK(x.left)
+        POSTORDER-TREE-WALK(x.right)
+        print x.key
+```
 
 ###查找
 递归查找
