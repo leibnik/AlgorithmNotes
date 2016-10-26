@@ -1,29 +1,22 @@
-#常见算法
-
-##分治算法
-
-###相关文章
-
-* [分治算法](http://www.cnblogs.com/steven_oyj/archive/2010/05/22/1741370.html)
-* [算法系列总结：分而治之——分治算法](http://www.cnblogs.com/Creator/archive/2011/06/18/2084267.html)
-* [Merge Sort](http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/Sorting/mergeSort.htm)
-
-###概念
+#算法分析
+##Θ记号
+Θ记号渐进的给出了一个函数的上界和下界
 ```
-把一个复杂的问题分成两个或更多的相同或相似的子问题，直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并
+Θ(g(n)) = {f(n):存在正常量c1,c2,和n0，使得对所有n ≥ n0， 有0 ≤ c1g(n) ≤ f(n) ≤ c2g(n)}
 ```
+##O记号
+用来表示一个函数的渐进上界
+```
+O(g(n)) = {f(n):存在正常量c,和n0，使得对所有n ≥ n0， 有0 ≤ f(n) ≤ cg(n)}
+```
+用来描述一个算法的最坏情况下的运行时间
 
-###例子
-
-####归并排序
-
-##回溯法
-
-##贪心算法
-
-##动态规划
-
-##分支限界法
+##Ω记号
+用来表示一个函数的渐进下界
+```
+Ω(g(n)) = {f(n):存在正常量c,和n0，使得对所有n ≥ n0， 有0 ≤ cg(n) ≤ f(n) }
+```
+用来描述一个算法的最好情况下的运行时间
 
 #数据结构
 ##栈
@@ -374,3 +367,31 @@ MERGE(A, p, q, r)
 
 ###算法时间复杂度
 分解问题的时间复杂度为O(logn),合并解的时间复杂度为O(n),整个算法的时间复杂度为O(nlogn)
+
+
+#常见算法
+
+##分治算法
+
+###相关文章
+
+* [分治算法](http://www.cnblogs.com/steven_oyj/archive/2010/05/22/1741370.html)
+* [算法系列总结：分而治之——分治算法](http://www.cnblogs.com/Creator/archive/2011/06/18/2084267.html)
+* [Merge Sort](http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/Sorting/mergeSort.htm)
+
+###概念
+```
+把一个复杂的问题分成两个或更多的相同或相似的子问题，直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并
+```
+
+###例子
+
+####归并排序
+
+##回溯法
+
+##贪心算法
+
+##动态规划
+
+##分支限界法
