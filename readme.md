@@ -199,7 +199,7 @@ TREE-MAXIMUM(x)
 ```
 TREE-SUCCESSOR(x)
     if x.right ≠ NIL
-        return TREE-MINIMUM(x, right)
+        return TREE-MINIMUM(x.right)
     y = x.p
     while y ≠ NIL and x == y.right
         x = y
@@ -211,7 +211,7 @@ TREE-SUCCESSOR(x)
 ```
 TREE-PRESUCCESSOR(x)
     if x.left ≠ NIL
-        return TREE-MAXIMUM(x, left)
+        return TREE-MAXIMUM(x.left)
     y = x.p
     while y ≠ NIL and x = y.left
         x = y
